@@ -28,8 +28,8 @@ def load_data_setting():
     # 3.发送登录 -->cookie
     login_url = "https://www.zhihu.com/login/phone_num"
     formdata = {
-        "phone_num": "13501282191",
-        "password": "20070815xiaohai",
+        "phone_num": "xxxxxx",
+        "password": "xxxxxx",
         "_xsrf": xsrf,
         "captcha": captch_code,
         "captcha_type": "en"

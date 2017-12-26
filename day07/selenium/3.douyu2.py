@@ -19,7 +19,7 @@ class douyu_spider():
 
         while True:
             print "正在下载的页数%d" % self.page
-            time.sleep(1)
+            time.sleep(2)
             self.page += 1
             data = self.driver.page_source
             self.analysis_data(data)
