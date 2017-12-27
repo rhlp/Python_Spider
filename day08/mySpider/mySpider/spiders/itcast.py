@@ -16,11 +16,26 @@ class ItcastSpider(scrapy.Spider):
     # 爬虫启动时，发送的第一批url地址列表
     start_urls = ['http://www.itcast.cn/channel/teacher.shtml']
 
+    def parse(self, response):
+        # 获取所有老师信息的节点
+        node_list = response.xpath("//div[@class='li_txt']")
 
+        # 迭代节点列表，获取每个老师的信息
+        for node in node_list:
+            # 每个item表示一个老师信息
+            item = MyspiderItem()
+
+            item['name'] = node.xpath("./h3/text()").extract_first()
+            item['level'] = node.xpath("./h4/text()").extract_first()
+            item['info'] = node.xpath("./p/text()").extract_first()
+
+            # 返回item数据给引擎，同时继续执行代码
+            yield item
 
     # 如果需要保存数据到json/csv/xml文件格式，可以先将所有item数据放到列表里，在return这个列表
     # 执行爬虫的时候，可以通过 -o 输出到指定的文件里，csrapy会识别文件的后缀，并存储为指定的格式
     # parse（）默认解析start_urls里发送的请求对应的响应
+    '''
     def parse(self, response):
         # with open("teacher.html", "w") as f:
         #     f.write(response.text)
@@ -35,6 +50,6 @@ class ItcastSpider(scrapy.Spider):
             item_list.append(item)
 
         return item_list
-
+    '''
 
 
