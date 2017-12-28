@@ -25,6 +25,10 @@ class TencentItem(scrapy.Item):
     # 发布时间
     publish_times = scrapy.Field()
 
+class PositionItem(scrapy.Item):
+    '''
+        保存详情页的item
+    '''
     # 工作职责
     position_zhize = scrapy.Field()
     # 工作要求
