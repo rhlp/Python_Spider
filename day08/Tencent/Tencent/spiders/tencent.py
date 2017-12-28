@@ -33,7 +33,18 @@ class TencentSpider(scrapy.Spider):
 
             yield item
 
-        # 通过offset偏移量控制url地址
+
+        # 2. 通过下一页攻台获取所有数据
+        '''
+        # 如果返回不是None,表示到了最后一页
+        # 如果返回None，表示没有到最后一页
+        if not response.xpath("//a[@id='next' and @class='noactive']/@href").extract_first():
+            next_link = "http://hr.tencent.com/" + response.xpath("//a[@id='next']/@href").extract_first()
+            yield scrapy.Request(url=next_link, callback=self.parse)
+        '''
+
+        # 1. 通过offset偏移量控制url地址(不能动态获取最后一页)
+        '''
         # 当偏移量到达2716，表示到了最后一页，就不在发送请求
         if self.offset <= 2716:
             # offset值每次自增10
@@ -43,7 +54,7 @@ class TencentSpider(scrapy.Spider):
             # callback表示该请求返回响应由指定的回调函数解析
             yield scrapy.Request(url=self.base_url + str(self.offset), callback=self.parse)
 
-
+        '''
 
 
 
