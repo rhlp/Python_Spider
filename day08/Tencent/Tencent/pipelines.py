@@ -7,6 +7,7 @@
 
 import json
 from Tencent.items import TencentItem, PositionItem
+from datetime import datetime
 
 class TencentPipeline(object):
 
@@ -15,6 +16,8 @@ class TencentPipeline(object):
 
     def process_item(self, item, spider):
         if isinstance(item, TencentItem):
+            item['source'] = spider.name
+            item['crawl_time'] = str(datetime.utcnow())
             content = json.dumps(dict(item)) + ",\n"
             self.file_name.write(content)
         return item
@@ -30,6 +33,8 @@ class PositionPipeline(object):
 
     def process_item(self, item, spider):
         if isinstance(item, PositionItem):
+            item['source'] = spider.name
+            item['crawl_time'] = str(datetime.utcnow())
             content = json.dumps(dict(item)) + ",\n"
             self.file_name.write(content)
         return item

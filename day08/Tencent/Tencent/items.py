@@ -25,6 +25,11 @@ class TencentItem(scrapy.Item):
     # 发布时间
     publish_times = scrapy.Field()
 
+    # 数据源
+    source = scrapy.Field()
+    # 抓取数据的时间
+    crawl_time = scrapy.Field()
+
 class PositionItem(scrapy.Item):
     '''
         保存详情页的item
@@ -34,6 +39,9 @@ class PositionItem(scrapy.Item):
     # 工作要求
     position_yaoqiu = scrapy.Field()
 
-
+    # 数据源
+    source = scrapy.Field()
+    # 抓取数据的时间
+    crawl_time = scrapy.Field()
 
 
