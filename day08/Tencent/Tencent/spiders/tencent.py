@@ -27,13 +27,29 @@ class TencentSpider(scrapy.Spider):
             item = TencentItem()
 
             item['position_name'] = node.xpath("./td[1]/a/text()").extract_first()
-            item['position_link'] = node.xpath("./td[1]/a/@href").extract_first()
+            item['position_link'] = "http://hr.tencent.com/" + node.xpath("./td[1]/a/@href").extract_first()
             item['position_type'] = node.xpath("./td[2]/text()").extract_first()
             item['people_number'] = node.xpath("./td[3]/text()").extract_first()
             item['work_location'] = node.xpath("./td[4]/text()").extract_first()
             item['publish_times'] = node.xpath("./td[5]/text()").extract_first()
 
-            yield item
+            # 发送每个职位详情页的请求，并指定回掉函数处理响应
+            # yield scrapy.Request(url=item["position_link"], callback=self.parse_positon)
+
+            # meta接收一个字典，并将该字典做为response的属性传递到回调函数里，在通过response.meta提取数据
+            yield scrapy.Request(url=item["position_link"], meta={"item":item}, callback=self.parse_position)
+
+            # 每获取一条职位信息，就将item对象提交给引擎，引擎判断是item对象，就交由管道处理
+            # yield item
+
+    def parse_position(self, response):
+        item = response.meta["item"]
+        # 工作职责和工作要求
+        item["position_zhize"] = "".join(response.xpath("//ul[@class='squareli']")[0].xpath("./li/text()").extract())
+        item["position_yaoqiu"] = "".join(response.xpath("//ul[@class='squareli']")[1].xpath("./li/text()").extract())
+
+        # 当所有数据全部储存完后，在yield item
+        yield item
 
 
         # 2. 通过下一页攻台获取所有数据
