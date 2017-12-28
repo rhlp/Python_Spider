@@ -13,7 +13,9 @@ class TencentSpider(scrapy.Spider):
     # url地址的偏移量，每次自增10
     offset = 0
     # 起始url地址列表
-    start_urls = [base_url + str(offset)]
+    # start_urls = [base_url + str(offset)]
+    # 通过start_urls处理高并发控制
+    start_urls = [base_url + str(num) for num in range(0, 2718, 10)]
 
     # 默认由parse()方法解析start_urls列表的响应
     def parse(self, response):
