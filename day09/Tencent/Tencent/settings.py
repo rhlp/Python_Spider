@@ -14,6 +14,12 @@ BOT_NAME = 'Tencent'
 SPIDER_MODULES = ['Tencent.spiders']
 NEWSPIDER_MODULE = 'Tencent.spiders'
 
+# 将所有的日志信息保存到本地文件里
+LOG_FILE = "baidu.log"
+# 只显示当前等级及以上的信息
+LOG_LEVEL = "INFO"
+# 最低是DEBUG
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Tencent (+http://www.yourdomain.com)'
