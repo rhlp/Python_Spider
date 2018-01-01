@@ -27,7 +27,9 @@ class DouyuSpider(scrapy.Spider):
                 # yield scrapy.Request(url=item['image_src'], meta = {"image_name" : item['nick_name']}, callback = self.parse_image)
 
                 yield item
-
+            # 处理下一页的情况
+            self.offset += 20
+            yield scrapy.Request(url=self.base_url + str(self.offset), callback=self.parse)
 
     '''
     def parse_image(self, response):

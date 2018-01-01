@@ -70,6 +70,7 @@ COOKIES_ENABLED = False
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'Douyu.pipelines.DouyuImagesPipeline': 300,
+   'Douyu.pipelines.DouyuMongoPipeline': 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

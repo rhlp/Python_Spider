@@ -19,3 +19,6 @@ class DouyuItem(scrapy.Item):
     city = scrapy.Field()
     # 图片的保存的磁盘路径
     image_path = scrapy.Field()
+
+    crawl_time = scrapy.Field()
+    source = scrapy.Field()
