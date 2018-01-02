@@ -17,7 +17,7 @@ class AqiSpider(scrapy.Spider):
         link_list = response.xpath("//div[@class='all']//li/a/@href").extract()
         name_list = response.xpath("//div[@class='all']//li/a/text()").extract()
 
-        for link, name in zip(link_list, name_list):
+        for link, name in zip(link_list, name_list)[10:11]:
             yield scrapy.Request(url=self.base_url + link, meta={"name":name}, callback=self.parse_month)
 
     def parse_month(self, response):
@@ -26,7 +26,7 @@ class AqiSpider(scrapy.Spider):
         '''
         link_list = response.xpath("//ul[@class='unstyled1']//li").extract()
 
-        for link in link_list:
+        for link in link_list[10:11]:
             yield scrapy.Request(url=self.base_url + link, meta=response.meta, callback=self.parse_day)
 
     def parse_day(self, response):
@@ -35,7 +35,7 @@ class AqiSpider(scrapy.Spider):
         '''
         tr_list = response.xpath("//div[@class='row']//tr")
         # 删除第一个元素 标题
-        tr_list.pop(0)
+        # tr_list.pop(0)
 
         for tr in tr_list:
             item = AqiItem()
