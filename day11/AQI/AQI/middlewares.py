@@ -17,6 +17,7 @@ class SeleniumMiddleWare(object):
 
             html = driver.page_source
             driver.quit()
-
-            return scrapy.http.HtmlResponse(url=request.url, body=html.encode("utf-8"),encoding="utf-8", request=request)
-
+            # 直接返回一个Response对象给引擎，引擎会认为这个是下载器返回的响应，那么就默认给Spider进行解析处理
+            # 那么表示该请求不再通过下载器下载，而是通过Chrome渲染后再返回
+            return scrapy.http.HtmlResponse(url=request.url, body=html.encode("utf-8"), encoding="utf-8",
+                                            request=request)
